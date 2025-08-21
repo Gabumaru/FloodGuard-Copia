@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "sender": "bruno",
+        "datetime": "2025-1-13 18:09:11",
+        "message": "Pessoal, na previsão para amanhã, é esperado um grande volume de chuva na região sul. Alguém sabe se a barragem está preparada para isso?"
+    },
+    {
+        "id": 2,
+        "sender": "lucena",
+        "datetime": "2025-1-13 19:01:26",
+        "message": "Aviso urgente: o bairro Jardim das Flores já começou a alagar! Evitem passar por lá se possível."
+    },
+    {
+        "id": 3,
+        "sender": "gustavo",
+        "datetime": "2025-1-13 19:27:58",
+        "message": "Hoje as previsões acertaram direitinho. O rio subiu exatamente no horário previsto. Impressionante!"
+    },
+    {
+        "id": 4,
+        "sender": "leonardo",
+        "datetime": "2025-1-13 22:30:51",
+        "message": "Estou acompanhando aqui no app, e parece que o alerta para a zona leste foi subestimado. Já tem ruas inteiras sem acesso."
+    }
+]

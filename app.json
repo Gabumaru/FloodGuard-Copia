@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "floodguard-app",
+    "slug": "floodguard-app",
+    "newArchEnabled": true,
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Nós precisamos da sua localização para mostrar onde você está no mapa."
+      }
+    },
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/floodguardLogo.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.brunotero.floodguardapp"
+    },
+    "web": {
+      "favicon": "./assets/images/logo.png"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7689e085-1a20-45a7-8e95-b9f20aa1d647"
+      }
+    }
+  }
+}
