@@ -24,6 +24,9 @@ if not OPENWEATHER_API_KEY or not GEMINI_API_KEY:
 
 genai.configure(api_key=GEMINI_API_KEY)
 
+# --- CONFIGURAÇÕES DE DIRETÓRIO ---
+DATA_DIR = 'inmet_data' 
+
 # --- CIDADES VIZINHAS DE INTERESSE ---
 # Dicionário com cidades próximas para análise de contexto regional.
 NEARBY_LOCATIONS = {
@@ -104,7 +107,7 @@ def determine_alert_level(total_rain_24h):
     elif total_rain_24h >= PRECIPITATION_THRESHOLDS["level_1_yellow"]:
         return 1, "Atenção", "Risco moderado de alagamentos. Tenha cuidado ao se deslocar."
     else:
-        return 0, "Sem Risco", "Condições normais. Baixa probabilidade de alagamentos."
+        return 0, "Sem Risco", "Condições normais. Baixa probabilidade de chuva."
 
 def analyze_with_gemini(forecast_data, alert_details, nearby_forecasts):
     """Envia os dados para o Gemini para gerar uma análise textual rica."""
