@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
@@ -10,7 +10,6 @@ const logo = require('../../../assets/images/logo.png');
 const introImage1 = require('../../../assets/images/intro1.png');
 const introImage2 = require('../../../assets/images/intro2.png');
 const introImage3 = require('../../../assets/images/intro3.png');
-const rainBackground = require('../../../assets/images/rain.png'); // Importa a imagem de fundo
 
 export default function Welcome({ navigation }: any) {
 
@@ -35,6 +34,7 @@ export default function Welcome({ navigation }: any) {
         },
     ];
 
+    // Função que navega para a tela de Login
     const navToLogin = () => {
         navigation.dispatch(
             CommonActions.reset({
@@ -66,54 +66,52 @@ export default function Welcome({ navigation }: any) {
     }
 
     return (
-        <View style={styles.fullScreen}>
-            {/* Imagem de fundo que preenche a tela toda */}
-            <Image
-                source={rainBackground}
-                style={StyleSheet.absoluteFillObject}
-                resizeMode="cover"
-            />
-            {/* Overlay para o conteúdo */}
-            <View style={styles.overlay}>
-                <View style={styles.logoContainer}>
-                    <Image source={logo} style={styles.logo} />
-                </View>
+        <View style={styles.container}>
 
-                <PagerView
-                    style={styles.pagerView}
-                    ref={pagerRef}
-                    onPageSelected={onPageSelected}
-                >
-                    {screens.map((screen, index) => (
-                        <View key={index} style={styles.page}>
-                            {screen.image && <Image source={screen.image} style={styles.image} />}
-                            <Text style={styles.title}>{screen.title}</Text>
-                            <Text style={styles.description}>{screen.description}</Text>
-                        </View>
-                    ))}
-                </PagerView>
+            {/* Logo no topo */}
+            <View style={styles.logoContainer}>
+                <Image source={logo} style={styles.logo} />
+                {/* A linha abaixo foi removida */}
+                {/* <Text style={styles.appName}>FLOODGUARD</Text> */}
+            </View>
 
-                <View style={styles.pageChangers}>
-                    <View style={styles.indicatorContainer}>
-                        {screens.map((_, index) => (
-                            <View
-                                key={index}
-                                style={[
-                                    styles.indicator,
-                                    index === currentScreen && styles.currentIndicator,
-                                ]}
-                            />
-                        ))}
+            {/* PagerView para o conteúdo */}
+            <PagerView
+                style={styles.pagerView}
+                ref={pagerRef}
+                onPageSelected={onPageSelected}
+            >
+                {screens.map((screen, index) => (
+                    <View key={index} style={styles.page}>
+                        {screen.image && <Image source={screen.image} style={styles.image} />}
+                        <Text style={styles.title}>{screen.title}</Text>
+                        <Text style={styles.description}>{screen.description}</Text>
                     </View>
+                ))}
+            </PagerView>
 
-                    {currentScreen === screens.length - 1 && (
-                        <TouchableOpacity style={styles.nextButton} onPress={nextScreen}>
-                            <Text style={styles.nextButtonText}>
-                                Começar
-                            </Text>
-                        </TouchableOpacity>
-                    )}
+            <View style={styles.pageChangers}>
+                {/* Indicadores de página */}
+                <View style={styles.indicatorContainer}>
+                    {screens.map((_, index) => (
+                        <View
+                            key={index}
+                            style={[
+                                styles.indicator,
+                                index === currentScreen && styles.currentIndicator,
+                            ]}
+                        />
+                    ))}
                 </View>
+
+                {/* Botão para a última tela */}
+                {currentScreen === screens.length - 1 && (
+                    <TouchableOpacity style={styles.nextButton} onPress={nextScreen}>
+                        <Text style={styles.nextButtonText}>
+                            Começar
+                        </Text>
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );

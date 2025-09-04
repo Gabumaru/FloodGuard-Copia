@@ -4,13 +4,10 @@ import { colors, typography } from '../../styles';
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
-    fullScreenContainer: { // Novo estilo para o container principal
+    container: {
         flex: 1,
-        backgroundColor: 'transparent', // Transparente para mostrar a imagem de fundo
-    },
-    overlay: { // Estilo para o conteúdo que ficará sobre a imagem de fundo
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(216, 238, 255, 0.7)', // Fundo azul com 70% de opacidade
+        // Altere a cor de fundo aqui para o tom que você usou nas outras telas
+        backgroundColor: '#D8EEFF',
         justifyContent: 'center',
         padding: 20,
     },
@@ -77,9 +74,11 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },
+    // Estilos para a tela de recuperar senha
     recoverPasswordContainer: {
         flex: 1,
-        backgroundColor: 'transparent', // Também transparente para a tela de recuperação, se for usada
+        // Altere a cor de fundo aqui também
+        backgroundColor: '#D8EEFF',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
