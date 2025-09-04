@@ -4,7 +4,7 @@ import { UserObject, UserLoginObject } from "../types/user";
 
 export async function handleRegister(email: string, password: string): Promise<UserLoginObject | undefined> {
     try {
-        const registeredUser = (await axios.post('https://server-production-c670.up.railway.app/api/usuarios/cadastro', {email, password})).data;
+        const registeredUser = (await axios.post('https://server-production-6472.up.railway.app/api/usuarios/cadastro', {email, password})).data;
         return registeredUser;
     }
     catch (error) {
@@ -15,7 +15,7 @@ export async function handleRegister(email: string, password: string): Promise<U
 
 export async function handleLogin(email: string, password: string): Promise<UserLoginObject | undefined> {
     try {
-        const response = (await axios.post('https://server-production-c670.up.railway.app/api/usuarios/login', {email, password})).data;
+        const response = (await axios.post('https://server-production-6472.up.railway.app/api/usuarios/login', {email, password})).data;
         return response;
     } catch (error) {
         console.error("Erro na requisição de login: ", error);

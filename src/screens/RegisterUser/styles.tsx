@@ -1,41 +1,53 @@
 import { StyleSheet } from 'react-native';
-import { colors, typography } from '../../styles';
+import { colors, typography } from '../../styles'; // O 'colors' e 'typography' devem ser do seu arquivo de estilos global.
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.lightGray,
+        backgroundColor: '#D8EEFF', // Cor de fundo da tela de boas-vindas
         justifyContent: 'center',
-        padding: 20,
+        paddingHorizontal: 25,
     },
     logoImage: { 
-        width: '75%',
+        width: 150,
+        height: 150,
         alignSelf: 'center', 
-        marginBottom: 20,
-    },
-    title: {
-        ...typography.h1,
-        textAlign: 'center',
         marginBottom: 40,
     },
+    title: {
+        fontSize: 32,
+        fontWeight: '700',
+        color: '#2C5E92',
+        textAlign: 'center',
+        marginBottom: 30,
+    },
     input: {
-        backgroundColor: colors.white,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.background,
-        padding: 15,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 18,
         fontSize: 16,
         marginBottom: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     registerButton: {
-        backgroundColor: colors.accent,
-        borderRadius: 8,
-        paddingVertical: 15,
+        backgroundColor: '#2C5E92',
+        borderRadius: 12,
+        paddingVertical: 18,
         alignItems: 'center',
+        marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
     },
     registerButtonText: {
-        ...typography.body,
-        color: colors.white,
+        color: '#FFFFFF',
+        fontSize: 18,
         fontWeight: 'bold',
     },
     loginArea: {
@@ -43,12 +55,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     loginText: {
-        ...typography.body,
-        color: colors.text,
+        fontSize: 16,
+        color: '#667788',
     },
     loginLink: {
-        ...typography.body,
-        color: colors.accent,
+        color: '#2C5E92',
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },

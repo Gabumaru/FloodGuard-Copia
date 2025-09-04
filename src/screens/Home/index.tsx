@@ -4,10 +4,11 @@ import * as Location from 'expo-location';
 
 import { HeaderButtons } from '../../components/HeaderButtons';
 import { getFloodAlert, GeminiAnalysisResponse } from '../../api/alert';
-import { styles } from "./styles"; // Reutilizando seus estilos principais
+import { styles } from "./styles";
+import { localStyles } from './localStyles';
 
 /**
- * Componente de exibição de alerta, agora com título e previsão de vizinhos.
+ * Componente de exibição de alerta, com layout simplificado e interativo.
  */
 const AlertDisplay = ({ data }: { data: GeminiAnalysisResponse }) => {
     const getAlertColor = (level: number) => {
@@ -22,30 +23,33 @@ const AlertDisplay = ({ data }: { data: GeminiAnalysisResponse }) => {
     
     return (
         <ScrollView style={localStyles.scrollView} contentContainerStyle={{ paddingBottom: 20 }}>
-            {/* --- NOVO TÍTULO DA LOCALIDADE --- */}
-            <Text style={localStyles.locationTitle}>Análise para: {data.location_name}</Text>
-
-            {/* Card Principal do Alerta */}
-            <View style={[localStyles.card, { borderColor: alertColor, borderWidth: 2 }]}>
-                <Text style={[localStyles.cardHeader, { backgroundColor: alertColor, color: textColor }]}>
+            {/* Banner de Alerta Principal */}
+            <View style={[localStyles.alertBanner, { backgroundColor: alertColor }]}>
+                <Text style={[localStyles.alertTitle, { color: textColor }]}>
                     {data.alert.level_name.toUpperCase()}
                 </Text>
-                <View style={localStyles.cardBody}>
-                    <Text style={localStyles.message}>{data.alert.message}</Text>
-                </View>
+                <Text style={[localStyles.alertMessage, { color: textColor }]}>{data.alert.message}</Text>
             </View>
 
             {/* Card com a Análise Técnica */}
             <View style={localStyles.card}>
-                <Text style={localStyles.cardHeader}>Análise da Situação</Text>
+                <Text style={localStyles.cardHeader}>Por que este alerta?</Text>
                 <View style={localStyles.cardBody}>
                     <Text style={localStyles.textBlock}>{data.analysis.summary}</Text>
                 </View>
             </View>
 
-            {/* --- NOVO CARD PARA CIDADES VIZINHAS --- */}
+            {/* Card com as Ações Recomendadas */}
             <View style={localStyles.card}>
-                <Text style={localStyles.cardHeader}>Previsão em Cidades Próximas</Text>
+                <Text style={localStyles.cardHeader}>O que devo fazer?</Text>
+                <View style={localStyles.cardBody}>
+                    <Text style={localStyles.textBlock}>{data.analysis.recommendations}</Text>
+                </View>
+            </View>
+
+            {/* Card com a Previsão em Cidades Próximas */}
+            <View style={localStyles.card}>
+                <Text style={localStyles.cardHeader}>Cidades Próximas</Text>
                 <View style={localStyles.cardBody}>
                     {data.nearby_forecasts.map((forecast, index) => (
                         <Text key={index} style={localStyles.nearbyItem}>
@@ -58,7 +62,7 @@ const AlertDisplay = ({ data }: { data: GeminiAnalysisResponse }) => {
     );
 };
 
-// A lógica principal da Home permanece a mesma, apenas o componente de exibição mudou.
+// A lógica principal da Home permanece a mesma
 export function Home({ navigation }: any) {
     const [alertData, setAlertData] = useState<GeminiAnalysisResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -106,7 +110,7 @@ export function Home({ navigation }: any) {
 
         if (errorMsg) {
             return (
-                 <View style={localStyles.centered}>
+                <View style={localStyles.centered}>
                     <Text style={localStyles.errorTitle}>Ocorreu um Erro</Text>
                     <Text style={localStyles.errorDetails}>{errorMsg}</Text>
                 </View>
@@ -127,82 +131,8 @@ export function Home({ navigation }: any) {
     return (
         <View style={styles.container}>
             <HeaderButtons navigation={navigation} />
+            <Text style={localStyles.locationTitle}>Análise para: {alertData?.location_name || 'Sua Localidade'}</Text>
             {renderContent()}
         </View>
     );
 }
-
-// Estilos locais para os novos componentes visuais
-const localStyles = StyleSheet.create({
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    statusText: {
-        marginTop: 15,
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center'
-    },
-    errorTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#d9534f',
-        marginBottom: 10,
-    },
-    errorDetails: {
-        fontSize: 16,
-        color: '#333',
-        textAlign: 'center',
-    },
-    scrollView: {
-        width: '100%',
-        paddingHorizontal: 10,
-    },
-    locationTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#333',
-        textAlign: 'center',
-        marginVertical: 15,
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        marginVertical: 8,
-        overflow: 'hidden',
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-    },
-    cardHeader: {
-        paddingVertical: 12,
-        paddingHorizontal: 15,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    cardBody: {
-        padding: 15,
-        paddingTop: 10,
-    },
-    message: {
-        fontSize: 18,
-        fontWeight: '500',
-        lineHeight: 25,
-        color: '#333',
-    },
-    textBlock: {
-        fontSize: 16,
-        lineHeight: 24,
-        color: '#333',
-    },
-    nearbyItem: {
-        fontSize: 16,
-        color: '#333',
-        lineHeight: 24,
-    }
-});

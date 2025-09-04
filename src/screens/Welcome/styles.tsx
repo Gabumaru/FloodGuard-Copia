@@ -1,14 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
-    container: {
+    fullScreen: {
         flex: 1,
-        backgroundColor: '#66b1f2',
+        backgroundColor: 'transparent',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(216, 238, 255, 0.7)',
+        justifyContent: 'center',
+    },
+    logoContainer: {
+        alignItems: 'center',
+        marginTop: 50,
+        marginBottom: 30,
     },
     logo: {
-        marginHorizontal: '10%',
-        marginTop: '10%',
-        width: '80%'
+        width: 200, 
+        height: 200, 
+        resizeMode: 'contain',
     },
     pagerView: {
         flex: 1,
@@ -16,70 +28,67 @@ export const styles = StyleSheet.create({
     page: {
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20,
+        backgroundColor: 'transparent',
+    },
+    image: {
+        width: width * 0.7,
+        height: width * 0.7,
+        resizeMode: 'contain',
+        marginBottom: 30,
     },
     title: {
-        marginBottom: 60,
-        paddingHorizontal: 50,
-        width: '100%',
-        fontSize: 40,
-        fontWeight: 'bold',
-        textAlign: 'left',
+        fontSize: 32,
+        fontWeight: '700',
+        textAlign: 'center',
+        // Nova cor para o título para maior contraste
+        color: '#FFFFFF',
+        marginBottom: 15,
     },
     description: {
-        paddingHorizontal: 50,
         fontSize: 16,
-        fontWeight: '300',
+        fontWeight: '400',
         textAlign: 'center',
-        lineHeight: 25,
+        lineHeight: 24,
+        // Nova cor para a descrição para maior contraste
+        color: '#F0F0F0',
+        paddingHorizontal: 20,
     },
     pageChangers: {
-        height: 120,
+        alignItems: 'center',
+        paddingVertical: 20,
     },
     indicatorContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        marginBottom: 50,
-    },
-    indicatorItem: {
         flexDirection: 'row',
-        alignItems: 'center'
+        justifyContent: 'center',
+        marginBottom: 20,
     },
     indicator: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#5b92f2',
-        marginHorizontal: 5,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#BCC6D0',
+        marginHorizontal: 4,
     },
     currentIndicator: {
-        width: 14,
-        height: 14,
-        borderRadius: 7,
-    },
-    coloredIndicator: {
-        backgroundColor: '#4b64f2',
-    },
-    indicatorsLink: {
-        position: 'absolute',
-        backgroundColor: '#4b64f2',
-        left: 15,
-        width: 15,
-        height: 4
+        width: 16,
+        backgroundColor: '#2C5E92',
     },
     nextButton: {
-        backgroundColor: '#5b92f288',
-        position: 'relative',
-        top: -20,
-        padding: 15,
-        marginHorizontal: 60,
-        borderRadius: 10,
+        backgroundColor: '#2C5E92',
+        width: width * 0.8,
+        paddingVertical: 18,
+        borderRadius: 12,
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
     },
     nextButtonText: {
-        color: '#4b64f2',
-        fontSize: 16,
+        color: '#FFFFFF',
+        fontSize: 18,
         fontWeight: 'bold',
-        textAlign: 'center',
     },
 });

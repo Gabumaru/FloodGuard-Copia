@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE_URL = 'https://server-production-c670.up.railway.app/api/';
+const API_BASE_URL = 'https://server-production-6472.up.railway.app/api/';
 
 const api = axios.create({
     baseURL: API_BASE_URL,

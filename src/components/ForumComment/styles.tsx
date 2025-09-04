@@ -4,39 +4,43 @@ import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff',
-        position: 'relative',
-        width: '100%',
-        borderRadius: 10,
-        marginBottom: 25,
-        padding: 20,
-        gap: 10,
-    },
-    divisionBar: {
-        height: 1,
-        borderColor: 'black',
-        borderTopWidth: .5,
-    },
-    message: {
-        position: 'relative',
-        width: screenWidth - 100,
-        fontSize: 16,
-        color: "#333",
-    },
-    userInfo: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: '8%',
-    },
-    username: {
-        fontWeight: '600',
-        fontSize: 15,
-    },
-    datetime: {
-        color: "#333",
-        fontSize: 14,
-        verticalAlign: 'bottom'
-    }
+    container: {
+        backgroundColor: '#FFFFFF', // Fundo branco mais limpo
+        width: '100%',
+        borderRadius: 12, // Borda arredondada para consistência
+        marginBottom: 15, // Espaço entre os cards
+        padding: 20,
+        gap: 15,
+        // Adicionando uma sombra
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+    },
+    divisionBar: {
+        height: 1,
+        backgroundColor: '#E0E0E0', // Cor mais suave
+        marginVertical: 5,
+    },
+    message: {
+        fontSize: 16,
+        color: '#333333',
+        lineHeight: 22,
+    },
+    userInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Alinha os itens nas extremidades
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    username: {
+        fontWeight: '600',
+        fontSize: 15,
+        color: '#2C5E92', // Cor de destaque para o nome de usuário
+    },
+    datetime: {
+        color: '#999999', // Cor mais suave para a data
+        fontSize: 13,
+    },
 });

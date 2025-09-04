@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // O endereço IP do seu computador na rede Wi-Fi.
 // Lembre-se de que este IP pode mudar.
-const API_BASE_URL = 'http://192.168.15.17:5000/'; 
+const API_BASE_URL = 'http://192.168.3.106:5000/'; 
 
 // Interface para a nova resposta estruturada vinda da API Python com Gemini.
 // É uma boa prática definir os tipos de dados que você espera receber.

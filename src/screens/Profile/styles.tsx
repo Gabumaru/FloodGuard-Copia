@@ -1,71 +1,115 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'baseline',
-        gap: 25,
-        paddingTop: '20%',
-        paddingHorizontal: '10%',
+        backgroundColor: '#D8EEFF', // Fundo azul
+        paddingHorizontal: 25,
+        paddingTop: 80,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#D8EEFF',
+    },
+    loadingText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: '#2C5E92',
+    },
+    headerTitle: {
+        fontSize: 28,
+        fontWeight: '700',
+        color: '#2C5E92',
+        textAlign: 'center',
+        marginBottom: 40,
     },
     info: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        marginBottom: 30,
         width: '100%',
+    },
+    infoLabelContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        flexWrap: 'wrap',
-        // backgroundColor: 'red'
-        
+        alignItems: 'center',
+        marginBottom: 10,
     },
     infoLabel: {
-        maxWidth: '40%',
-        fontWeight: '500',
-        fontSize: 20,
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: '#2C5E92',
+        marginLeft: 10,
+    },
+    infoDataContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 15,
+        width: '100%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
     },
     infoData: {
-        textAlign: 'right',
         fontWeight: 'normal',
-        fontSize: 18,
-        color: '#333',
-        alignSelf: 'flex-end',
-        paddingRight: 30
+        fontSize: 16,
+        color: '#333333',
+        flex: 1,
     },
-    editTouch: {
-        position: 'absolute',
-        right: 0,
-        bottom: 4
-    },
-    editIcon: {
-        width: 16,
-        height: 16,
+    editSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
     },
     editInput: {
-        alignSelf: 'flex-end',
         flex: 1,
-        marginLeft: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        height: '100%'
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 15,
+        fontSize: 16,
+        color: '#333333',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
+        marginRight: 10,
     },
-    editButtons: {
-        overflow: 'hidden',
-        height: '100%'
+    pickerInput: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        height: 50,
+        color: '#333333',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
+        marginRight: 10,
     },
     editButton: {
-        flex: 1,
-        aspectRatio: 1,
-        textAlign: 'center',
-        verticalAlign: 'middle'
-    },
-    checkButton: {
-        backgroundColor: 'green',
-        borderTopRightRadius: 10
+        backgroundColor: '#2C5E92',
+        borderRadius: 10,
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
     },
     cancelButton: {
-        backgroundColor: 'darkred',
-        borderBottomRightRadius: 10
-    }
+        backgroundColor: '#D9534F',
+    },
 });
