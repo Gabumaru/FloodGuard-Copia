@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Alert, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { styles } from './styles';
 import { UserObject } from '../../types/user';
-import { getAuthUser, updateBairro, updateUsername } from '../../services/user';
+import { getAuthUser, updateUsername } from '../../services/user';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { Bairro } from '../../types/bairro';
-import { listBairros } from '../../api/bairro';
-import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
+import { getAlertConfig, mapValueToAlertLevel } from '../../utils/FloodAlertLevels';
 
-export function Profile() {
+const TEST_ALERT_LEVEL_KEY = '@FloodGuard_TestAlertLevel';
+
+export function Profile({ navigation }: any) { // Adicionado 'navigation' para futuras melhorias
     const [userData, setUserData] = useState<UserObject | undefined>();
     const [editingField, setEditingField] = useState<{ field: string, value: any } | null>(null);
-    const [bairroList, setBairroList] = useState<Array<Bairro> | undefined>();
     const [isLoading, setIsLoading] = useState(true);
+    
+    // Novo estado para a porcentagem de teste (agora um string para o TextInput)
+    const [testAlertValue, setTestAlertValue] = useState('0'); 
+
+    const loadTestAlertValue = async () => {
+        const savedValue = await AsyncStorage.getItem(TEST_ALERT_LEVEL_KEY);
+        if (savedValue !== null) {
+            setTestAlertValue(savedValue);
+        }
+    };
+    
+    const saveTestAlertValue = async () => {
+        const value = parseInt(testAlertValue);
+        if (isNaN(value) || value < 0 || value > 100) {
+            return Alert.alert("Erro de Valor", "A porcentagem deve ser um número entre 0 e 100.");
+        }
+        await AsyncStorage.setItem(TEST_ALERT_LEVEL_KEY, value.toString());
+        
+        // Opcional: Forçar a Home a buscar os dados novamente (depende da sua navegação)
+        // Se a Home estiver montada, ela buscará o novo valor no próximo evento.
+        Alert.alert("Sucesso", `Nível de teste salvo: ${value}%`);
+    };
 
     const getUserData = async () => {
         setIsLoading(true);
@@ -24,19 +46,9 @@ export function Profile() {
         setIsLoading(false);
     };
 
-    const getBairroList = async () => {
-        try {
-            const data = await listBairros();
-            setBairroList(data);
-        } catch (error) {
-            console.error("Erro ao carregar a lista de bairros:", error);
-            Alert.alert("Erro", "Não foi possível carregar as opções de região. Tente novamente mais tarde.");
-        }
-    };
-
-    useEffect(() => {
-        getUserData();
-        getBairroList();
+    useEffect(() => { 
+        getUserData(); 
+        loadTestAlertValue(); 
     }, []);
 
     const onEditChange = (text: string) => setEditingField((prev: { field: string, value: any } | null) => prev ? ({ ...prev, value: text }) : null);
@@ -46,15 +58,6 @@ export function Profile() {
         const response = await updateUsername(editingField.value);
         if (response === true) Alert.alert("Sucesso", "Nome de usuário atualizado");
         else Alert.alert("Erro", "Nome de usuário não alterado");
-        await getUserData();
-        setEditingField(null);
-    };
-
-    const handleBairroUpdate = async () => {
-        if (editingField?.field !== 'region') return Alert.alert("Erro", "Tente novamente");
-        const response = await updateBairro(editingField.value);
-        if (response === true) Alert.alert("Sucesso", "Região atualizada");
-        else Alert.alert("Erro", "Região não alterada");
         await getUserData();
         setEditingField(null);
     };
@@ -73,9 +76,40 @@ export function Profile() {
         );
     }
 
+    const currentAlertLevel = mapValueToAlertLevel(parseInt(testAlertValue) || 0);
+    const currentAlertLevelName = getAlertConfig(currentAlertLevel).name;
+
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView 
+            style={styles.container} 
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
             <Text style={styles.headerTitle}>Meu Perfil</Text>
+
+            {/* --- Novo Campo de Teste de Alerta com Input --- */}
+            <View style={styles.alertTestContainer}>
+                <Text style={styles.alertTestHeader}>
+                    Teste de Alerta
+                </Text>
+                <Text style={styles.alertTestStatus}>
+                    Nível Atual: {currentAlertLevelName} ({testAlertValue}%)
+                </Text>
+                
+                <View style={styles.testInputGroup}>
+                    <TextInput
+                        style={styles.testInputField}
+                        keyboardType='numeric'
+                        placeholder="0-100"
+                        value={testAlertValue}
+                        onChangeText={setTestAlertValue}
+                        maxLength={3}
+                    />
+                    <TouchableOpacity style={styles.testSaveButton} onPress={saveTestAlertValue}>
+                        <Text style={styles.testSaveButtonText}>Salvar Teste</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            {/* ----------------------------------------------- */}
 
             {/* Nome de Usuário */}
             <View style={styles.info}>
@@ -83,6 +117,7 @@ export function Profile() {
                     <Ionicons name="person-outline" size={24} color="#2C5E92" />
                     <Text style={styles.infoLabel}>Nome de usuário:</Text>
                 </View>
+                {/* ... (O restante do código de exibição/edição do Nome de Usuário) */}
                 {editingField?.field === "username" ? (
                     <View style={styles.editSection}>
                         <TextInput
@@ -119,43 +154,6 @@ export function Profile() {
                     <Text style={styles.infoData} numberOfLines={1}>{userData?.email || 'Não definido'}</Text>
                 </View>
             </View>
-
-            {/* Região */}
-            <View style={styles.info}>
-                <View style={styles.infoLabelContainer}>
-                    <Ionicons name="location-outline" size={24} color="#2C5E92" />
-                    <Text style={styles.infoLabel}>Região:</Text>
-                </View>
-                {editingField?.field === "region" ? (
-                    <View style={styles.editSection}>
-                        <Picker
-                            selectedValue={editingField.value}
-                            onValueChange={(itemValue) => setEditingField(prev => prev ? { ...prev, value: itemValue } : null)}
-                            style={styles.pickerInput}
-                        >
-                            <Picker.Item label="Selecione uma região" value="" />
-                            {bairroList?.map(bairro => (
-                                <Picker.Item label={bairro.nomeBairro} value={bairro.id.toString()} key={bairro.id} />
-                            ))}
-                        </Picker>
-                        <TouchableOpacity style={styles.editButton} onPress={handleBairroUpdate}>
-                            <AntDesign name="check" size={20} color="white" />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.editButton, styles.cancelButton]} onPress={handleCancelUpdate}>
-                            <AntDesign name="close" size={20} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                ) : (
-                    <View style={styles.infoDataContainer}>
-                        <Text style={styles.infoData}>{
-                            bairroList?.find(bairro => bairro.id === userData?.idBairro)?.nomeBairro || 'Não definido'
-                        }</Text>
-                        <TouchableOpacity onPress={() => setEditingField({ field: "region", value: userData?.idBairro || "" })}>
-                            <Ionicons name="pencil-outline" size={20} color="#667788" />
-                        </TouchableOpacity>
-                    </View>
-                )}
-            </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
