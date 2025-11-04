@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, TouchableOpacity } from 'react-native'; // Adicionado TouchableOpacity
 import { CommonActions } from '@react-navigation/native';
 import { styles } from './styles';
 import personalInfoIcon from '../../../assets/images/personalInfo.png';
@@ -16,9 +16,9 @@ export function Configs({ navigation }: any) {
                 index: 0,
                 routes: [
                     {
-                        name: 'Authentication Tabs', // Nome do Navigator pai
+                        name: 'Authentication Tabs',
                         state: {
-                            routes: [{ name: 'Login Screen' }], // Nome da tela no Navigator filho
+                            routes: [{ name: 'Login Screen' }],
                         },
                     },
                 ],
@@ -31,26 +31,33 @@ export function Configs({ navigation }: any) {
         navToLogin();
     } 
 
-    const renderConfigItem = (icon:any, text:String, toPageName:String) => 
-        <View style={styles.configItem} onTouchEnd={() => navigation.navigate('Configurations Tabs', {screen: toPageName})}>
+    const renderConfigItem = (icon:any, text:string, toPageName:string) => 
+        <TouchableOpacity 
+            style={styles.configItem} 
+            onPress={() => navigation.navigate('Configurations Tabs', {screen: toPageName})} // Usando onPress
+        >
             <View style={styles.configIconContainer}>
                 <Image source={icon} style={styles.configIcon} resizeMode='contain' />
             </View>
             <Text style={styles.configText}>{text}</Text>
-        </View>
+            {/* Adiciona uma seta para indicar navegação, mantendo o estilo de cartão */}
+            <Text style={styles.arrowIcon}>›</Text> 
+        </TouchableOpacity>
 
     return (
         <View style={styles.container}>
-            { renderConfigItem( personalInfoIcon, "Informação Pessoal", 'Profile Screen' )}
-            <View style={styles.divider} />
-            { renderConfigItem( alertConfigIcon, "Configurar Alertas", 'Alert Configurations Screen') }
-            <View style={styles.divider} />
-            { renderConfigItem( reportIcon, "Denunciar Abuso", 'Report Abuse Screen')}
-            <View style={styles.divider} />
-            { renderConfigItem(talkToUsIcon, "Fale Conosco", 'Talk to Us Screen') }
-            <Text style={styles.endSession}
-                onPress={endSession}
-            >Encerrar Sessão</Text>
+            <Text style={styles.headerTitle}>Configurações</Text>
+            
+            <View style={styles.optionsList}>
+                { renderConfigItem( personalInfoIcon, "Informação Pessoal", 'Profile Screen' )}
+                { renderConfigItem( alertConfigIcon, "Configurar Alertas", 'Alert Configurations Screen') }
+                { renderConfigItem( reportIcon, "Denunciar Abuso", 'Report Abuse Screen')}
+                { renderConfigItem(talkToUsIcon, "Fale Conosco", 'Talk to Us Screen') }
+            </View>
+            
+            <TouchableOpacity style={styles.endSessionButton} onPress={endSession}>
+                <Text style={styles.endSessionText}>Encerrar Sessão</Text>
+            </TouchableOpacity>
         </View>
     );
 }

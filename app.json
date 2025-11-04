@@ -33,11 +33,21 @@
       "favicon": "./assets/images/logo.png"
     },
     "plugins": [
-      "expo-font"
+        "expo-font",
+        [
+            "expo-build-properties",
+            {
+                "android": {
+                    "compileSdkVersion": 34, 
+                    "targetSdkVersion": 34, 
+                    "googleServicesFile": "./config/google-services.json" 
+                }
+            }
+        ]
     ],
     "extra": {
       "eas": {
-        "projectId": "7689e085-1a20-45a7-8e95-b9f20aa1d647"
+        "projectId": "31eb8385-aa40-4319-9371-758a7b4ab27c"
       }
     }
   }

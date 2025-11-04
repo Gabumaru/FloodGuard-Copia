@@ -13,10 +13,7 @@ import { getAlertConfig, mapValueToAlertLevel } from '../../utils/FloodAlertLeve
 const TEST_ALERT_LEVEL_KEY = '@FloodGuard_TestAlertLevel';
 const DEFAULT_BG_COLOR = '#D8EEFF'; // Cor padrão de fundo para ser aplicada com transparência
 
-/**
- * Converte um HEX color (ex: #d9534f) para uma string RGBA com transparência fixa (0.2 ou 0.4).
- * Esta função é crucial para criar o efeito de "fundo desbotado".
- */
+
 const hexToRgba = (hex: string, alpha: number = 0.2): string => {
     let r = 0, g = 0, b = 0;
     
